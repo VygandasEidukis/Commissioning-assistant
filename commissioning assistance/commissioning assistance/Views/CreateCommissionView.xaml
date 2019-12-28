@@ -4,10 +4,136 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:commissioning_assistance.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="White"
     mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <Border
+                        Background="#ECEFF9"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+                        <Image
+                            Width="250"
+                            Height="250"
+                            RenderOptions.BitmapScalingMode="Fant"
+                            Source="{Binding CurrentImage.Path}" />
+                    </Border>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button
+                            x:Name="PreviousButton"
+                            Content="{materialDesign:PackIcon Kind=ArrowLeftBoldBox,
+                                                              Size=30}"
+                            Style="{StaticResource IconButton}" />
+                        <Button
+                            x:Name="AddImageButton"
+                            Content="{materialDesign:PackIcon Kind=AddBox,
+                                                              Size=30}"
+                            Style="{StaticResource IconButton}" />
+                        <Button
+                            x:Name="RemoveImageButton"
+                            Content="{materialDesign:PackIcon Kind=MinusBox,
+                                                              Size=30}"
+                            Style="{StaticResource IconButton}" />
+                        <Button
+                            x:Name="NextButton"
+                            Content="{materialDesign:PackIcon Kind=ArrowRightBoldBox,
+                                                              Size=30}"
+                            Style="{StaticResource IconButton}" />
+
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+
+                <TextBlock Text="Instagram" />
+                <TextBox
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    Text="{Binding Commission.Instagram}" />
+                <TextBlock Text="Name" />
+                <TextBox
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    Text="{Binding Commission.Name}" />
+                <TextBlock Text="Email" />
+                <TextBox
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    Text="{Binding Commission.Email}" />
+                <TextBlock Text="Price / Currency / Quantity" />
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBox
+                        Width="250"
+                        Text="{Binding Commission.Money}"
+                        ToolTip="Charging price" />
+                    <ComboBox
+                        Width="80"
+                        Margin="10,0,0,0"
+                        ItemsSource="{Binding Currencies}"
+                        SelectedItem="{Binding Commission.CurrencyType}"
+                        ToolTip="Currency type" />
+                    <TextBox
+                        Width="50"
+                        Margin="10,0,0,0"
+                        Text="{Binding Commission.Quantity}"
+                        ToolTip="Quantity of products" />
+                </StackPanel>
+
+                <TextBlock Text="Comission type" />
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox
+                        Width="250"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding ProductTypes}"
+                        SelectedItem="{Binding Commission.ProductType}" />
+
+                    <Button
+                        Width="35"
+                        Height="35"
+                        Margin="5,0"
+                        Content="{materialDesign:PackIcon Kind=Cog,
+                                                          Size=30}"
+                        Style="{StaticResource IconButton}"
+                        ToolTip="Edit your comission types Ex.: Portrait, Full body ..." />
+                </StackPanel>
+
+                <TextBlock Text="Due Date" />
+                <DatePicker
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    Text="{Binding Commission.DueDate}" />
+
+                <Button Margin="25,10">
+                    <Button.Content>
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="50"
+                                Height="25"
+                                Kind="AddThick" />
+                            <TextBlock VerticalAlignment="Center" Text="Add commission" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

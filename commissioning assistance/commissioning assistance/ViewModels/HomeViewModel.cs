@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using commissioning_assistance.Models.Commission;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace commissioning_assistance.ViewModels
 {
     public class HomeViewModel : Screen
     {
+        
     }
 }

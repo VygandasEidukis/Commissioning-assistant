@@ -8,6 +8,6 @@ namespace commissioning_assistance.Models.Commission
 {
     public interface IReferencedCommission
     {
-        List<>
+        List<ImageModel> References { get; set; }
     }
 }
