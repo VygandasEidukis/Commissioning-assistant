@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace commissioning_assistance.ViewModels
 {
-    public class MainViewModel : Conductor<object>
+    public class HomeViewModel : Screen
     {
-        public MainViewModel()
-        {
-            ActivateItem(new DefaultViewModel());
-        }
     }
 }

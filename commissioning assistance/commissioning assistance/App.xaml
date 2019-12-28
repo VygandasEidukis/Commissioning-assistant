@@ -1,14 +1,40 @@
-﻿<Application x:Class="commissioning_assistance.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:commissioning_assistance">
+﻿<Application
+    x:Class="commissioning_assistance.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:commissioning_assistance">
+
     <Application.Resources>
-        <ResourceDictionary>
+        <ResourceDictionary xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <local:Bootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush
+                x:Key="TransperentBrush"
+                Opacity="0.0001"
+                Color="White" />
+            <Style x:Key="IconButton" TargetType="Button">
+                <Setter Property="Width" Value="60" />
+                <Setter Property="Height" Value="45" />
+                <Setter Property="Foreground" Value="#1B3650" />
+                <Setter Property="BorderBrush" Value="{StaticResource TransperentBrush}" />
+                <Setter Property="Background" Value="{StaticResource TransperentBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#FF4788c8" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
+
+
 </Application>
