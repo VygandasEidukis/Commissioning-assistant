@@ -2,17 +2,21 @@
 using commissioning_assistance.Helpers;
 using commissioning_assistance.Models;
 using commissioning_assistance.Models.Commission;
+using commissioning_assistance.ViewModels.Singletons;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace commissioning_assistance.ViewModels
 {
     public class CreateCommissionViewModel : Screen
     {
+        public MainViewModel LoadingScreen { get => MainViewModelSingleton.Instance.Item; }
+
         #region Variables
         private ImageModel _CurrentImage;
 
@@ -74,6 +78,7 @@ namespace commissioning_assistance.ViewModels
 
         private async void Loaded()
         {
+            LoadingScreen.LoadingScreenStatus(true);
             Currencies.AddRange(GetCurrencies());
             Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
 
@@ -88,6 +93,8 @@ namespace commissioning_assistance.ViewModels
                 if (ProductTypes.Count > 0)
                     Commission.ProductType = ProductTypes[0];
             });
+            NotifyOfPropertyChange(() => Commission);
+            LoadingScreen.LoadingScreenStatus(false);
         }
 
         public string GetCurrentCultureCurrency()
@@ -153,9 +160,14 @@ namespace commissioning_assistance.ViewModels
             
         }
 
+
         public void AddCommissionButton()
         {
-            Commission.Create();
+            if(Commission.Verify())
+            {
+                Commission.Create();
+                (Parent as dynamic).ActivateItem(new ListCommissionViewModel());
+            }
         }
     }
 }

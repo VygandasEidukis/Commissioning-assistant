@@ -49,5 +49,19 @@ namespace commissioning_assistance.Models.Commission
             using DatabaseDbContext context = new DatabaseDbContext();
             context.Commissions.Remove(this);
         }
+
+        public bool Verify()
+        {
+            if (References.Count == 0) return false;
+            if (Instagram.Length == 0) return false;
+            if (Name.Length == 0) return false;
+            if (Email.Length == 0) return false;
+            if (CurrencyType.Length == 0) return false;
+            if (Quantity == 0) return false;
+            if (References.Count == 0) return false;
+            if (String.IsNullOrEmpty(ProductType.ToString())) return false;
+
+            return true;
+        }
     }
 }
