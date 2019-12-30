@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccessLibrary.DataAccess;
 
 namespace commissioning_assistance.Models.Commission
 {
-    public class InstagramCommission : IInstagramCommission, IReferencedCommission
+    public class InstagramCommission : IInstagramCommission, IReferencedCommission, IEntity
     {
         public List<ImageModel> References { get; set; }
         public string Instagram { get; set; }
@@ -32,19 +31,23 @@ namespace commissioning_assistance.Models.Commission
             References = new List<ImageModel>();
         }
 
-        public void Create(DataAccessModel dataAccess)
+        public void Create()
         {
-            throw new NotImplementedException();
+            using DatabaseDbContext context = new DatabaseDbContext();
+            context.Commissions.Add(this);
+            context.SaveChanges();
         }
 
-        public void Delete(DataAccessModel dataAccess)
+        public void Update()
         {
-            throw new NotImplementedException();
+            using DatabaseDbContext context = new DatabaseDbContext();
+            context.SaveChanges();
         }
 
-        public void Update(DataAccessModel dataAccess)
+        public void Delete()
         {
-            throw new NotImplementedException();
+            using DatabaseDbContext context = new DatabaseDbContext();
+            context.Commissions.Remove(this);
         }
     }
 }

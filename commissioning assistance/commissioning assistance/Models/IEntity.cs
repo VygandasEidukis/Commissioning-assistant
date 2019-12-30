@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLibrary.DataAccess
+namespace commissioning_assistance.Models
 {
-    public class DataAccessModel
+    public interface IEntity
     {
+        int Id { get; set; }
     }
 }

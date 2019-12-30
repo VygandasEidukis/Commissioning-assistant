@@ -13,6 +13,7 @@ namespace commissioning_assistance.ViewModels
 {
     public class CreateCommissionViewModel : Screen
     {
+        #region Variables
         private ImageModel _CurrentImage;
 
         public ImageModel CurrentImage
@@ -61,13 +62,32 @@ namespace commissioning_assistance.ViewModels
             }
         }
 
+        #endregion
+
         public CreateCommissionViewModel()
         {
             Commission = new InstagramCommission();
             Currencies = new BindableCollection<string>();
             ProductTypes = new BindableCollection<ProductType>();
+            Loaded();
+        }
+
+        private async void Loaded()
+        {
             Currencies.AddRange(GetCurrencies());
             Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
+
+            Task t = new Task(() =>
+            {
+                using var context = new DatabaseDbContext();
+                ProductTypes.AddRange(context.ProductTypes.Where(x => x.Type != null));
+            });
+            t.Start();
+            await t.ContinueWith((x) =>
+            {
+                if (ProductTypes.Count > 0)
+                    Commission.ProductType = ProductTypes[0];
+            });
         }
 
         public string GetCurrentCultureCurrency()
@@ -131,6 +151,11 @@ namespace commissioning_assistance.ViewModels
                 CurrentImage = Commission.References[0];
             }
             
+        }
+
+        public void AddCommissionButton()
+        {
+            Commission.Create();
         }
     }
 }

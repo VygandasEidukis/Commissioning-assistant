@@ -1,7 +1,8 @@
 ﻿namespace commissioning_assistance.Models
 {
-    public class ProductType
+    public class ProductType : IEntity
     {
+        public int Id { get; set; }
         public string Type { get; set; }
 
         public ProductType(string type)

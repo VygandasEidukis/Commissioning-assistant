@@ -1,9 +1,4 @@
-﻿using DataAccessLibrary.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace commissioning_assistance.Models.Commission
 {
@@ -21,9 +16,9 @@ namespace commissioning_assistance.Models.Commission
         DateTime DueDate { get; set; }
         DateTime FinishedDate { get; set; }
 
-        void Create(DataAccessModel dataAccess);
-        void Update(DataAccessModel dataAccess);
-        void Delete(DataAccessModel dataAccess);
+        void Create();
+        void Update();
+        void Delete();
 
     }
 }
