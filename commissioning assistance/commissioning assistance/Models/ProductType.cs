@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace commissioning_assistance.Models
 {
@@ -19,6 +22,14 @@ namespace commissioning_assistance.Models
         }
 
         public ProductType(){}
+
+        public static async Task<ICollection<ProductType>> GetCommissions()
+        {
+            using DatabaseDbContext context = new DatabaseDbContext();
+            var t = new List<ProductType>();
+            t.AddRange(await context.ProductTypes.ToListAsync());
+            return t;
+        }
 
         public override string ToString()
         {

@@ -73,28 +73,28 @@ namespace commissioning_assistance.ViewModels
             Commission = new InstagramCommission();
             Currencies = new BindableCollection<string>();
             ProductTypes = new BindableCollection<ProductType>();
-            Loaded();
+
+            Task.Run(Loaded);
         }
 
-        private async void Loaded()
+        private async Task Loaded()
         {
             LoadingScreen.LoadingScreenStatus(true);
+
+            //adding currency
             Currencies.AddRange(GetCurrencies());
             Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
 
-            Task t = new Task(() =>
-            {
-                using var context = new DatabaseDbContext();
-                ProductTypes.AddRange(context.ProductTypes);
-            });
-            t.Start();
-            await t.ContinueWith((x) =>
-            {
-                if (ProductTypes.Count > 0)
-                    Commission.ProductType = ProductTypes[0];
-            });
+            //adding product types
+            var items = await ProductType.GetCommissions();
+            ProductTypes.AddRange(items);
+            Commission.ProductType = ProductTypes.Count > 0 ? ProductTypes[0] : null;
             NotifyOfPropertyChange(() => Commission);
+
+
             LoadingScreen.LoadingScreenStatus(false);
+
+           
         }
 
         public string GetCurrentCultureCurrency()

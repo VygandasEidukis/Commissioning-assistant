@@ -42,14 +42,25 @@ namespace commissioning_assistance.Models.Commission
         public void Update()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
+            context.ProductTypes.Attach(ProductType);
             context.SaveChanges();
         }
 
         public void Delete()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
+            context.ProductTypes.Attach(ProductType);
             context.Commissions.Remove(this);
+            context.SaveChanges();
         }
+
+        public static ICollection<InstagramCommission> GetCommissions()
+        {
+            using DatabaseDbContext context = new DatabaseDbContext();
+
+            return context.Commissions.ToList();
+        }
+
 
         public bool Verify()
         {
