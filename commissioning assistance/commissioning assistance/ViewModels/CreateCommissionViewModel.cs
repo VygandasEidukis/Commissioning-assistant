@@ -85,7 +85,7 @@ namespace commissioning_assistance.ViewModels
             Task t = new Task(() =>
             {
                 using var context = new DatabaseDbContext();
-                ProductTypes.AddRange(context.ProductTypes.Where(x => x.Type != null));
+                ProductTypes.AddRange(context.ProductTypes);
             });
             t.Start();
             await t.ContinueWith((x) =>

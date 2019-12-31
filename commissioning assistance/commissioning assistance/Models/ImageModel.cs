@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace commissioning_assistance.Models
 {
-    public class ImageModel : IEntity
+    public class ImageModel
     {
         public int Id { get; set; }
         public string Path { get; set; }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace commissioning_assistance.Models.Commission
 {
-    public class InstagramCommission : IInstagramCommission, IReferencedCommission, IEntity
+    public class InstagramCommission : IInstagramCommission, IReferencedCommission
     {
         public List<ImageModel> References { get; set; }
         public string Instagram { get; set; }
@@ -16,25 +17,25 @@ namespace commissioning_assistance.Models.Commission
         public float Money { get; set; }
         public string CurrencyType { get; set; }
         public int Quantity { get; set; }
-        public ProductType ProductType { get; set; }
         public string Description { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime FinishedDate { get; set; }
+
+        public ProductType ProductType { get; set; }
 
         public InstagramCommission()
         {
             OrderDate = DateTime.Today;
             DueDate = DateTime.Today;
             FinishedDate = DateTime.Today;
-            ProductType = new ProductType();
-            References = new List<ImageModel>();
         }
 
         public void Create()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
             context.Commissions.Add(this);
+            context.ProductTypes.Attach(ProductType);
             context.SaveChanges();
         }
 
@@ -52,6 +53,7 @@ namespace commissioning_assistance.Models.Commission
 
         public bool Verify()
         {
+            if (References == null) return false;
             if (References.Count == 0) return false;
             if (Instagram.Length == 0) return false;
             if (Name.Length == 0) return false;

@@ -13,5 +13,13 @@ namespace commissioning_assistance.Models
         public DbSet<InstagramCommission> Commissions { get; set; }
         public DbSet<ImageModel> Images { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // configures one-to-many relationship
+            /*modelBuilder.Entity<ProductType>()
+                .HasMany<InstagramCommission>(s => s.Commissions);*/
+        }
     }
 }
+

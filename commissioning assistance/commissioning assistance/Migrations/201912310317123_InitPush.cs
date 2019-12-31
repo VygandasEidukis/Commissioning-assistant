@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreatedBaseClasses : DbMigration
+    public partial class InitPush : DbMigration
     {
         public override void Up()
         {
@@ -22,20 +22,20 @@
                         OrderDate = c.DateTime(nullable: false),
                         DueDate = c.DateTime(nullable: false),
                         FinishedDate = c.DateTime(nullable: false),
-                        ProductType_Id = c.Int(),
+                        ProductType_ProductTypeId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ProductTypes", t => t.ProductType_Id)
-                .Index(t => t.ProductType_Id);
+                .ForeignKey("dbo.ProductTypes", t => t.ProductType_ProductTypeId)
+                .Index(t => t.ProductType_ProductTypeId);
             
             CreateTable(
                 "dbo.ProductTypes",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        ProductTypeId = c.Int(nullable: false, identity: true),
                         Type = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.ProductTypeId);
             
             CreateTable(
                 "dbo.ImageModels",
@@ -54,9 +54,9 @@
         public override void Down()
         {
             DropForeignKey("dbo.ImageModels", "InstagramCommission_Id", "dbo.InstagramCommissions");
-            DropForeignKey("dbo.InstagramCommissions", "ProductType_Id", "dbo.ProductTypes");
+            DropForeignKey("dbo.InstagramCommissions", "ProductType_ProductTypeId", "dbo.ProductTypes");
             DropIndex("dbo.ImageModels", new[] { "InstagramCommission_Id" });
-            DropIndex("dbo.InstagramCommissions", new[] { "ProductType_Id" });
+            DropIndex("dbo.InstagramCommissions", new[] { "ProductType_ProductTypeId" });
             DropTable("dbo.ImageModels");
             DropTable("dbo.ProductTypes");
             DropTable("dbo.InstagramCommissions");

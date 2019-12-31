@@ -7,13 +7,13 @@ namespace commissioning_assistance.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class CreatedBaseClasses : IMigrationMetadata
+    public sealed partial class InitPush : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreatedBaseClasses));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitPush));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912301813440_CreatedBaseClasses"; }
+            get { return "201912310317123_InitPush"; }
         }
         
         string IMigrationMetadata.Source

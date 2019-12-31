@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace commissioning_assistance.ViewModels
 {
-    public class ListCommissionViewModel : Screen
+    public class ListCommissionViewModel : Conductor<object>
     {
+        public ListCommissionViewModel()
+        {
+            ActivateItem(new ProductViewModel());
+        }
     }
 }
