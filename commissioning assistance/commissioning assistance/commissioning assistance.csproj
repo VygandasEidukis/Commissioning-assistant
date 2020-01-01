@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\CalendarViewModel.cs" />
     <Compile Include="ViewModels\CreateCommissionViewModel.cs" />
     <Compile Include="ViewModels\DefaultViewModel.cs" />
+    <Compile Include="ViewModels\EditCommissionViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ListCommissionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -128,6 +129,9 @@
     </Compile>
     <Compile Include="Views\DefaultView.xaml.cs">
       <DependentUpon>DefaultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditCommissionView.xaml.cs">
+      <DependentUpon>EditCommissionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -177,12 +181,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj">
-      <Project>{36f456f5-24e9-47b7-b8b1-6ee573a95dcc}</Project>
-      <Name>DataAccessLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Views\CalendarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DefaultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditCommissionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

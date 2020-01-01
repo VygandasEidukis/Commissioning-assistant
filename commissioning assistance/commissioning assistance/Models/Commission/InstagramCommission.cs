@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,11 +55,10 @@ namespace commissioning_assistance.Models.Commission
             context.SaveChanges();
         }
 
-        public static ICollection<InstagramCommission> GetCommissions()
+        public static async Task<ICollection<InstagramCommission>> GetCommissions()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
-
-            return context.Commissions.ToList();
+            return await context.Commissions.Include(pt => pt.ProductType).Include(reference => reference.References).ToListAsync();
         }
 
 

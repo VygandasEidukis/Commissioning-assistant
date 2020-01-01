@@ -26,9 +26,7 @@ namespace commissioning_assistance.Models
         public static async Task<ICollection<ProductType>> GetCommissions()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
-            var t = new List<ProductType>();
-            t.AddRange(await context.ProductTypes.ToListAsync());
-            return t;
+            return await context.ProductTypes.ToListAsync();
         }
 
         public override string ToString()

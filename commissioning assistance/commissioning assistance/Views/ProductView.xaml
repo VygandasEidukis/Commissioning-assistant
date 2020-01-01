@@ -16,7 +16,7 @@
                 <ItemsControl
                     x:Name="UserProducts"
                     HorizontalAlignment="Center"
-                    ItemsSource="{Binding Products, Mode=TwoWay}">
+                    ItemsSource="{Binding Commissions, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border
@@ -34,21 +34,14 @@
                                         <Border.Effect>
                                             <DropShadowEffect ShadowDepth="1" />
                                         </Border.Effect>
-                                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{Binding CurrentImage, Mode=TwoWay}" />
+                                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{Binding References[0].Path}" />
                                     </Border>
 
                                     <TextBlock HorizontalAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Bottom"
-                                        Text="{Binding Price, Mode=TwoWay}" />
-
-                                    <TextBlock
-                                        x:Name="Id"
-                                        Width="0"
-                                        Height="0"
-                                        Text="{Binding Id}"
-                                        Visibility="Hidden" />
+                                        Text="{Binding DueDate, Mode=TwoWay}" />
                                 </StackPanel>
 
                             </Border>

@@ -17,29 +17,34 @@ namespace commissioning_assistance.ViewModels
         public BindableCollection<IBaseCommission> Commissions
         {
             get { return _Commissions; }
-            set { _Commissions = value; }
+            set 
+            { 
+                _Commissions = value;
+                NotifyOfPropertyChange(() => Commissions);
+            }
         }
 
         public ProductViewModel()
         {
             Commissions = new BindableCollection<IBaseCommission>();
 
-            LoadData();
+            Task.Run(LoadData);
         }
 
-        private async void LoadData()
+        private async Task LoadData()
         {
             MainViewModelSingleton singleton = MainViewModelSingleton.Instance;
             singleton.Item.LoadingScreenStatus(true);
 
-            Task t = new Task(() => 
-            {
-                using var context = new DatabaseDbContext();
-                Commissions.AddRange(context.Commissions);
-            });
+            var items = await InstagramCommission.GetCommissions();
+            Commissions.AddRange(items);
+                
+            singleton.Item.LoadingScreenStatus(false);
+        }
 
-            t.Start();
-            await t.ContinueWith((ats) => singleton.Item.LoadingScreenStatus(false));
+        public void ProductClicked(IBaseCommission commission)
+        {
+            ActivateItem(new EditCommissionViewModel(commission as InstagramCommission));
         }
 
     }
