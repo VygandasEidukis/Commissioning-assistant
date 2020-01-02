@@ -9,5 +9,7 @@ namespace commissioning_assistance.Core.Repositories
 {
     public interface IImageRepository : IRepository<ImageModel>
     {
+        public void RemoveById(int id);
+        public void DeatatchImage(ImageModel img);
     }
 }

@@ -1,4 +1,5 @@
-﻿using commissioning_assistance.Models.Commission;
+﻿using commissioning_assistance.Models;
+using commissioning_assistance.Models.Commission;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace commissioning_assistance.Core.Repositories
     {
         IEnumerable<InstagramCommission> GetFullCommissions();
         void UpdateCommission(InstagramCommission commission);
+        void AddReferences(InstagramCommission commission, List<ImageModel> img);
     }
 }

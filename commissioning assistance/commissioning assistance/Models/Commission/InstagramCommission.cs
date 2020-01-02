@@ -24,7 +24,13 @@ namespace commissioning_assistance.Models.Commission
         public DateTime DueDate { get; set; }
         public DateTime FinishedDate { get; set; }
 
-        public virtual ProductType ProductType { get; set; }
+        private ProductType _productType;
+
+        public ProductType ProductType
+        {
+            get { return _productType; }
+            set { _productType = value; ProductTypeId = _productType.ProductTypeId; }
+        }
         public int ProductTypeId { get; set; }
 
         public InstagramCommission()

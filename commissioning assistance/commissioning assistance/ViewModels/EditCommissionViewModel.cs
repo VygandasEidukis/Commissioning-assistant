@@ -16,6 +16,7 @@ namespace commissioning_assistance.ViewModels
 {
     class EditCommissionViewModel : Screen
     {
+        private UnitOfWork unitOfWork { get; set; }
         public MainViewModel LoadingScreen { get => MainViewModelSingleton.Instance.Item; }
 
         #region Variables
@@ -80,7 +81,8 @@ namespace commissioning_assistance.ViewModels
             CurrentImage = commission.References[0];
             RemoveReferences = new List<int>();
             AddReferences = new List<ImageModel>();
-            
+            unitOfWork = new UnitOfWork(new DatabaseDbContext());
+
             Task.Run(Loaded);
         }
 
@@ -93,11 +95,10 @@ namespace commissioning_assistance.ViewModels
             Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
 
             //adding product types
-            using var uow = new UnitOfWork(new DatabaseDbContext());
-            var items = uow.ProductTypes.GetEntities();
+            var items = unitOfWork.ProductTypes.GetEntities();
 
             ProductTypes.AddRange(items);
-            Commission.ProductType = uow.ProductTypes.GetEntity(Commission.ProductTypeId);
+            Commission.ProductType = unitOfWork.ProductTypes.GetEntity(Commission.ProductTypeId);
             NotifyOfPropertyChange(() => Commission);
 
 
@@ -130,29 +131,24 @@ namespace commissioning_assistance.ViewModels
         {
             if(Commission.Verify())
             {
-                using var unitOfWork = new UnitOfWork(new DatabaseDbContext());
+                unitOfWork.Commissions.UpdateCommission(Commission);
                 unitOfWork.Complete();
-
-                //unitOfWork.Commissions.Add(Commission);
-                /*
-                Commission.Update();
-                using DatabaseDbContext context = new DatabaseDbContext();
-                
-                foreach (int image in RemoveReferences)
-                    context.Images.Where(reff => reff.Id == image).Delete();
-
-                context.SaveChanges();
-                */
                 ((Parent as dynamic).Parent as dynamic).ActivateItem(new ProductViewModel());
             }
         }
 
         public void AddImageButton()
         {
-            Commission.References = ImageHelper.GetImages(Commission.References);
-            if (Commission.References[0] != null)
+            var imgs = new List<ImageModel>();
+            imgs = ImageHelper.GetImages(imgs);
+            if (imgs.Count > 0)
             {
-                CurrentImage = Commission.References[0];
+                foreach (var img in imgs)
+                {
+                    var com = new ImageModel { Path = img.Path, CommissionId = Commission.Id, Commission = Commission };
+                    Commission.References.Add(com);
+                    unitOfWork.Images.Add(com);
+                }
             }
         }
 
@@ -178,9 +174,13 @@ namespace commissioning_assistance.ViewModels
         {
             if (CurrentImage != null)
             {
-                if(CurrentImage.Id != 0)
-                    RemoveReferences.Add(CurrentImage.Id);
-
+                if(CurrentImage.Id == 0)
+                {
+                    unitOfWork.Images.DeatatchImage(CurrentImage);
+                }else
+                {
+                    unitOfWork.Images.RemoveById(CurrentImage.Id);
+                }
                 Commission.References.Remove(CurrentImage);
             }
             CurrentImage = null;
