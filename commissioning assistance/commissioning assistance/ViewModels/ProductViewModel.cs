@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using commissioning_assistance.Models;
 using commissioning_assistance.Models.Commission;
+using commissioning_assistance.Models.DataAccess;
 using commissioning_assistance.ViewModels.Singletons;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,8 @@ namespace commissioning_assistance.ViewModels
             MainViewModelSingleton singleton = MainViewModelSingleton.Instance;
             singleton.Item.LoadingScreenStatus(true);
 
-            var items = await InstagramCommission.GetCommissions();
-            Commissions.AddRange(items);
+            using var unitOfWork = new UnitOfWork(new DatabaseDbContext());
+            Commissions.AddRange(unitOfWork.Commissions.GetFullCommissions());
                 
             singleton.Item.LoadingScreenStatus(false);
         }
@@ -47,5 +48,10 @@ namespace commissioning_assistance.ViewModels
             ActivateItem(new EditCommissionViewModel(commission as InstagramCommission));
         }
 
+        public override void DeactivateItem(object item, bool close)
+        {
+            NotifyOfPropertyChange(() => Commissions);
+            base.DeactivateItem(item, close);
+        }
     }
 }

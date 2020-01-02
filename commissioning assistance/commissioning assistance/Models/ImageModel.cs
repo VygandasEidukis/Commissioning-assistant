@@ -1,4 +1,5 @@
-﻿using System;
+﻿using commissioning_assistance.Models.Commission;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace commissioning_assistance.Models
     {
         public int Id { get; set; }
         public string Path { get; set; }
+
+        public virtual InstagramCommission Commission { get; set; }
+        public int CommissionId { get; set; }
 
         public ImageModel(string Path)
         {

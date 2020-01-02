@@ -2,7 +2,9 @@
 using commissioning_assistance.Helpers;
 using commissioning_assistance.Models;
 using commissioning_assistance.Models.Commission;
+using commissioning_assistance.Models.DataAccess;
 using commissioning_assistance.ViewModels.Singletons;
+using EntityFramework.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,6 +19,9 @@ namespace commissioning_assistance.ViewModels
         public MainViewModel LoadingScreen { get => MainViewModelSingleton.Instance.Item; }
 
         #region Variables
+        public List<int> RemoveReferences { get; set; }
+        public List<ImageModel> AddReferences { get; set; }
+
         private ImageModel _CurrentImage;
 
         public ImageModel CurrentImage
@@ -73,6 +78,9 @@ namespace commissioning_assistance.ViewModels
             Currencies = new BindableCollection<string>();
             ProductTypes = new BindableCollection<ProductType>();
             CurrentImage = commission.References[0];
+            RemoveReferences = new List<int>();
+            AddReferences = new List<ImageModel>();
+            
             Task.Run(Loaded);
         }
 
@@ -85,9 +93,11 @@ namespace commissioning_assistance.ViewModels
             Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
 
             //adding product types
-            var items = await ProductType.GetCommissions();
+            using var uow = new UnitOfWork(new DatabaseDbContext());
+            var items = uow.ProductTypes.GetEntities();
+
             ProductTypes.AddRange(items);
-            Commission.ProductType = ProductTypes.Count > 0 ? ProductTypes[0] : null;
+            Commission.ProductType = uow.ProductTypes.GetEntity(Commission.ProductTypeId);
             NotifyOfPropertyChange(() => Commission);
 
 
@@ -120,8 +130,20 @@ namespace commissioning_assistance.ViewModels
         {
             if(Commission.Verify())
             {
+                using var unitOfWork = new UnitOfWork(new DatabaseDbContext());
+                unitOfWork.Complete();
+
+                //unitOfWork.Commissions.Add(Commission);
+                /*
                 Commission.Update();
-                this.TryClose();
+                using DatabaseDbContext context = new DatabaseDbContext();
+                
+                foreach (int image in RemoveReferences)
+                    context.Images.Where(reff => reff.Id == image).Delete();
+
+                context.SaveChanges();
+                */
+                ((Parent as dynamic).Parent as dynamic).ActivateItem(new ProductViewModel());
             }
         }
 
@@ -156,6 +178,9 @@ namespace commissioning_assistance.ViewModels
         {
             if (CurrentImage != null)
             {
+                if(CurrentImage.Id != 0)
+                    RemoveReferences.Add(CurrentImage.Id);
+
                 Commission.References.Remove(CurrentImage);
             }
             CurrentImage = null;

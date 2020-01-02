@@ -17,9 +17,5 @@ namespace commissioning_assistance.Models.Commission
         DateTime FinishedDate { get; set; }
 
         bool Verify();
-        void Create();
-        void Update();
-        void Delete();
-
     }
 }

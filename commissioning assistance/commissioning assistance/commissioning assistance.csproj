@@ -98,17 +98,36 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\Repositories\ICommissionRepository.cs" />
+    <Compile Include="Core\Repositories\IImageRepository.cs" />
+    <Compile Include="Core\Repositories\IProductTypeRepository.cs" />
+    <Compile Include="Core\Repositories\IRepository.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Migrations\201912310317123_InitPush.cs" />
     <Compile Include="Migrations\201912310317123_InitPush.designer.cs">
       <DependentUpon>201912310317123_InitPush.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001021555170_FixedProductType.cs" />
+    <Compile Include="Migrations\202001021555170_FixedProductType.designer.cs">
+      <DependentUpon>202001021555170_FixedProductType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001021628572_ChangedImageLogic.cs" />
+    <Compile Include="Migrations\202001021628572_ChangedImageLogic.designer.cs">
+      <DependentUpon>202001021628572_ChangedImageLogic.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Commission\IBaseCommission.cs" />
     <Compile Include="Models\Commission\IInstagramCommission.cs" />
     <Compile Include="Models\Commission\InstagramCommission.cs" />
     <Compile Include="Models\Commission\IReferencedCommission.cs" />
+    <Compile Include="Models\DataAccess\Configuration\CommissionsConfiguration.cs" />
     <Compile Include="Models\DataAccess\DatabaseDbContext.cs" />
+    <Compile Include="Models\DataAccess\Repositories\CommissionRepository.cs" />
+    <Compile Include="Models\DataAccess\Repositories\ImageRepository.cs" />
+    <Compile Include="Models\DataAccess\Repositories\ProductTypeRepository.cs" />
+    <Compile Include="Models\DataAccess\Repositories\Repository.cs" />
+    <Compile Include="Models\DataAccess\UnitOfWork.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\ProductType.cs" />
     <Compile Include="ViewModels\CalendarViewModel.cs" />
@@ -166,6 +185,12 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201912310317123_InitPush.resx">
       <DependentUpon>201912310317123_InitPush.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001021555170_FixedProductType.resx">
+      <DependentUpon>202001021555170_FixedProductType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001021628572_ChangedImageLogic.resx">
+      <DependentUpon>202001021628572_ChangedImageLogic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

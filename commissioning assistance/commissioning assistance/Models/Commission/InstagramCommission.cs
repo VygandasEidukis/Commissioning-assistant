@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,8 @@ namespace commissioning_assistance.Models.Commission
         public DateTime DueDate { get; set; }
         public DateTime FinishedDate { get; set; }
 
-        public ProductType ProductType { get; set; }
+        public virtual ProductType ProductType { get; set; }
+        public int ProductTypeId { get; set; }
 
         public InstagramCommission()
         {
@@ -31,6 +33,7 @@ namespace commissioning_assistance.Models.Commission
             DueDate = DateTime.Today;
             FinishedDate = DateTime.Today;
         }
+        /*
 
         public void Create()
         {
@@ -43,7 +46,13 @@ namespace commissioning_assistance.Models.Commission
         public void Update()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
-            context.ProductTypes.Attach(ProductType);
+            
+            foreach (var img in this.References)
+            {
+                context.Images.AddOrUpdate(img);
+            }
+            context.Commissions.AddOrUpdate(this);
+            context.ProductTypes.AddOrUpdate(ProductType);
             context.SaveChanges();
         }
 
@@ -55,12 +64,19 @@ namespace commissioning_assistance.Models.Commission
             context.SaveChanges();
         }
 
+        public void HoldDeleteReference(ImageModel image)
+        {
+            using DatabaseDbContext context = new DatabaseDbContext();
+            context.Images.Remove(image);
+        }
+
         public static async Task<ICollection<InstagramCommission>> GetCommissions()
         {
             using DatabaseDbContext context = new DatabaseDbContext();
-            return await context.Commissions.Include(pt => pt.ProductType).Include(reference => reference.References).ToListAsync();
-        }
 
+            return await context.Commissions.Include(pt => pt.ProductType).Include(reference => reference.References).AsNoTracking().ToListAsync();
+        }
+        */
 
         public bool Verify()
         {

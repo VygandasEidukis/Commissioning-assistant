@@ -1,4 +1,5 @@
 ﻿using commissioning_assistance.Models.Commission;
+using commissioning_assistance.Models.DataAccess.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,9 +17,7 @@ namespace commissioning_assistance.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // configures one-to-many relationship
-            /*modelBuilder.Entity<ProductType>()
-                .HasMany<InstagramCommission>(s => s.Commissions);*/
+            modelBuilder.Configurations.Add(new CommissionsConfiguration());
         }
     }
 }

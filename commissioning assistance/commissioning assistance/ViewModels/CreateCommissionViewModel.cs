@@ -2,6 +2,7 @@
 using commissioning_assistance.Helpers;
 using commissioning_assistance.Models;
 using commissioning_assistance.Models.Commission;
+using commissioning_assistance.Models.DataAccess;
 using commissioning_assistance.ViewModels.Singletons;
 using System;
 using System.Collections.Generic;
@@ -86,7 +87,9 @@ namespace commissioning_assistance.ViewModels
             Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
 
             //adding product types
-            var items = await ProductType.GetCommissions();
+            using var uow = new UnitOfWork(new DatabaseDbContext());
+
+            var items = uow.ProductTypes.GetEntities();
             ProductTypes.AddRange(items);
             Commission.ProductType = ProductTypes.Count > 0 ? ProductTypes[0] : null;
             NotifyOfPropertyChange(() => Commission);
@@ -165,7 +168,11 @@ namespace commissioning_assistance.ViewModels
         {
             if(Commission.Verify())
             {
-                Commission.Create();
+
+                using var unitOfWork = new UnitOfWork(new DatabaseDbContext());
+                unitOfWork.Commissions.Add(Commission);
+                unitOfWork.Complete();
+
                 (Parent as dynamic).ActivateItem(new ListCommissionViewModel());
             }
         }
