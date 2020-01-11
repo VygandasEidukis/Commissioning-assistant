@@ -4,12 +4,8 @@ using commissioning_assistance.Models;
 using commissioning_assistance.Models.Commission;
 using commissioning_assistance.Models.DataAccess;
 using commissioning_assistance.ViewModels.Singletons;
-using EntityFramework.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace commissioning_assistance.ViewModels
@@ -73,6 +69,12 @@ namespace commissioning_assistance.ViewModels
 
         #endregion
 
+        ~EditCommissionViewModel()
+        {
+            unitOfWork.Reset();
+            unitOfWork.Dispose();
+        }
+
         public EditCommissionViewModel(InstagramCommission commission)
         {
             Commission = commission;
@@ -91,8 +93,8 @@ namespace commissioning_assistance.ViewModels
             LoadingScreen.LoadingScreenStatus(true);
 
             //adding currency
-            Currencies.AddRange(GetCurrencies());
-            Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == GetCurrentCultureCurrency());
+            Currencies.AddRange(CultureManager.GetCurrencySymbols());
+            Commission.CurrencyType = Currencies.Single(currency => currency.ToString() == CultureManager.GetLocalCurrencySymbol());
 
             //adding product types
             var items = unitOfWork.ProductTypes.GetEntities();
@@ -103,28 +105,6 @@ namespace commissioning_assistance.ViewModels
 
 
             LoadingScreen.LoadingScreenStatus(false);
-        }
-
-        public List<string> GetCurrencies()
-        {
-            var currenciesEnums = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                .Select(ci => ci.LCID).Distinct()
-                .Select(id => new RegionInfo(id))
-                .GroupBy(r => r.ISOCurrencySymbol).ToList();
-
-            List<string> currencies = new List<string>();
-
-            foreach (var currency in currenciesEnums)
-            {
-                currencies.Add(currency.Key.ToString());
-            }
-
-            return currencies;
-        }
-
-        public string GetCurrentCultureCurrency()
-        {
-            return new RegionInfo(CultureInfo.CurrentCulture.LCID).ISOCurrencySymbol.ToString();
         }
 
         public void UpdateCommissionButton()
@@ -180,18 +160,11 @@ namespace commissioning_assistance.ViewModels
                 }else
                 {
                     unitOfWork.Images.SetRemoveTag(CurrentImage);
-                    //unitOfWork.Images.RemoveById(CurrentImage.Id);
                 }
                 Commission.References.Remove(CurrentImage);
             }
             CurrentImage = null;
             if (Commission.References.Count > 0) CurrentImage = Commission.References[0];
-        }
-
-        ~EditCommissionViewModel()
-        {
-            unitOfWork.Reset();
-            unitOfWork.Dispose();
         }
     }
 }

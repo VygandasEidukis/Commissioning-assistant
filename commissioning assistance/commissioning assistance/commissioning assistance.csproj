@@ -121,6 +121,7 @@
     <Compile Include="Models\Commission\IInstagramCommission.cs" />
     <Compile Include="Models\Commission\InstagramCommission.cs" />
     <Compile Include="Models\Commission\IReferencedCommission.cs" />
+    <Compile Include="Models\CultureManager.cs" />
     <Compile Include="Models\DataAccess\Configuration\CommissionsConfiguration.cs" />
     <Compile Include="Models\DataAccess\DatabaseDbContext.cs" />
     <Compile Include="Models\DataAccess\Repositories\CommissionRepository.cs" />
