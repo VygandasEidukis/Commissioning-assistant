@@ -25,5 +25,10 @@ namespace commissioning_assistance.Models.DataAccess.Repositories
         {
             dbContext.Images.Delete(i => i.Id == id);
         }
+
+        public void SetRemoveTag(ImageModel img)
+        {
+            dbContext.Entry(img).State = EntityState.Deleted;
+        }
     }
 }

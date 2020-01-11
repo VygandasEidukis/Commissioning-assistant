@@ -179,13 +179,13 @@ namespace commissioning_assistance.ViewModels
                     unitOfWork.Images.DeatatchImage(CurrentImage);
                 }else
                 {
-                    unitOfWork.Images.RemoveById(CurrentImage.Id);
+                    unitOfWork.Images.SetRemoveTag(CurrentImage);
+                    //unitOfWork.Images.RemoveById(CurrentImage.Id);
                 }
                 Commission.References.Remove(CurrentImage);
             }
             CurrentImage = null;
             if (Commission.References.Count > 0) CurrentImage = Commission.References[0];
-
         }
 
         ~EditCommissionViewModel()

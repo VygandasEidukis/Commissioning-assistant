@@ -50,20 +50,23 @@ namespace commissioning_assistance.Models.DataAccess.Repositories
 
         public void Reset()
         {
-            foreach (DbEntityEntry entry in Context.ChangeTracker.Entries())
+            if(Context != null)
             {
-                switch (entry.State)
+                foreach (DbEntityEntry entry in Context.ChangeTracker.Entries())
                 {
-                    case EntityState.Modified:
-                        entry.State = EntityState.Unchanged;
-                        break;
-                    case EntityState.Added:
-                        entry.State = EntityState.Detached;
-                        break;  
-                    case EntityState.Deleted:
-                        entry.Reload();
-                        break;
-                    default: break;
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            entry.State = EntityState.Unchanged;
+                            break;
+                        case EntityState.Added:
+                            entry.State = EntityState.Detached;
+                            break;
+                        case EntityState.Deleted:
+                            entry.Reload();
+                            break;
+                        default: break;
+                    }
                 }
             }
         }
