@@ -13,6 +13,7 @@ namespace commissioning_assistance.Core
         IProductTypeRepository ProductTypes { get; }
         IImageRepository Images { get; }
 
+        void Reset();
         int Complete();
     }
 }

@@ -20,6 +20,7 @@ namespace commissioning_assistance.Models.DataAccess.Repositories
             dbContext.Entry(img).State = EntityState.Detached;
         }
 
+        [Obsolete]
         public void RemoveById(int id)
         {
             dbContext.Images.Delete(i => i.Id == id);

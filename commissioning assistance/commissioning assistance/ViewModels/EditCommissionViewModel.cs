@@ -184,12 +184,14 @@ namespace commissioning_assistance.ViewModels
                 Commission.References.Remove(CurrentImage);
             }
             CurrentImage = null;
-            if (Commission.References.Count > 0)
-            {
-                CurrentImage = Commission.References[0];
-            }
+            if (Commission.References.Count > 0) CurrentImage = Commission.References[0];
 
         }
 
+        ~EditCommissionViewModel()
+        {
+            unitOfWork.Reset();
+            unitOfWork.Dispose();
+        }
     }
 }

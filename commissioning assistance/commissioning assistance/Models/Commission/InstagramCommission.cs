@@ -29,7 +29,12 @@ namespace commissioning_assistance.Models.Commission
         public ProductType ProductType
         {
             get { return _productType; }
-            set { _productType = value; ProductTypeId = _productType.ProductTypeId; }
+            set 
+            {
+                _productType = value; 
+                if(_productType != null)
+                    ProductTypeId = _productType.ProductTypeId;
+            }
         }
         public int ProductTypeId { get; set; }
 
@@ -39,50 +44,6 @@ namespace commissioning_assistance.Models.Commission
             DueDate = DateTime.Today;
             FinishedDate = DateTime.Today;
         }
-        /*
-
-        public void Create()
-        {
-            using DatabaseDbContext context = new DatabaseDbContext();
-            context.Commissions.Add(this);
-            context.ProductTypes.Attach(ProductType);
-            context.SaveChanges();
-        }
-
-        public void Update()
-        {
-            using DatabaseDbContext context = new DatabaseDbContext();
-            
-            foreach (var img in this.References)
-            {
-                context.Images.AddOrUpdate(img);
-            }
-            context.Commissions.AddOrUpdate(this);
-            context.ProductTypes.AddOrUpdate(ProductType);
-            context.SaveChanges();
-        }
-
-        public void Delete()
-        {
-            using DatabaseDbContext context = new DatabaseDbContext();
-            context.ProductTypes.Attach(ProductType);
-            context.Commissions.Remove(this);
-            context.SaveChanges();
-        }
-
-        public void HoldDeleteReference(ImageModel image)
-        {
-            using DatabaseDbContext context = new DatabaseDbContext();
-            context.Images.Remove(image);
-        }
-
-        public static async Task<ICollection<InstagramCommission>> GetCommissions()
-        {
-            using DatabaseDbContext context = new DatabaseDbContext();
-
-            return await context.Commissions.Include(pt => pt.ProductType).Include(reference => reference.References).AsNoTracking().ToListAsync();
-        }
-        */
 
         public bool Verify()
         {

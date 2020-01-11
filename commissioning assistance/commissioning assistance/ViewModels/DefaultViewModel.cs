@@ -21,6 +21,7 @@ namespace commissioning_assistance.ViewModels
 
         public void ListButton()
         {
+            GC.Collect();
             ActivateItem(new ListCommissionViewModel());
         }
 

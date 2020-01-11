@@ -12,5 +12,6 @@ namespace commissioning_assistance.Core.Repositories
 
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+        void Reset();
     }
 }

@@ -30,6 +30,13 @@ namespace commissioning_assistance.Models.DataAccess
             return _context.SaveChanges();
         }
 
+        public void Reset()
+        {
+            Commissions.Reset();
+            ProductTypes.Reset();
+            Images.Reset();
+        }
+
         public void Dispose()
         {
             _context.Dispose();
