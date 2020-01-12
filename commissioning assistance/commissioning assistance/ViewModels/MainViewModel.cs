@@ -3,7 +3,7 @@ using commissioning_assistance.ViewModels.Singletons;
 
 namespace commissioning_assistance.ViewModels
 {
-    public class MainViewModel : Conductor<object>
+    public class MainViewModel : Conductor<DefaultViewModel>
     {
         private bool _LoadingVisible;
 

@@ -15,6 +15,7 @@ namespace commissioning_assistance.Models.Commission
         DateTime OrderDate { get; set; }
         DateTime DueDate { get; set; }
         DateTime FinishedDate { get; set; }
+        bool Finished { get; set; }
 
         bool Verify();
     }

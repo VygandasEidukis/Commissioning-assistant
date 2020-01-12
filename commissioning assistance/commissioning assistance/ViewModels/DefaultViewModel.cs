@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace commissioning_assistance.ViewModels
 {
-    class DefaultViewModel : Conductor<object>
+    public class DefaultViewModel : Conductor<object>
     {
         public void HomeButton()
         {
@@ -21,7 +21,9 @@ namespace commissioning_assistance.ViewModels
 
         public void ListButton()
         {
+            //collects garbage so if user canceled commission update it restores defaults instantly
             GC.Collect();
+
             ActivateItem(new ListCommissionViewModel());
         }
 

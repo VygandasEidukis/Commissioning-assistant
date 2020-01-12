@@ -37,6 +37,7 @@ namespace commissioning_assistance.Models.Commission
             }
         }
         public int ProductTypeId { get; set; }
+        public bool Finished { get; set; } = false;
 
         public InstagramCommission()
         {
