@@ -1,6 +1,5 @@
 ﻿namespace commissioning_assistance.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class Added_CommissionFinished_Boolean : DbMigration
