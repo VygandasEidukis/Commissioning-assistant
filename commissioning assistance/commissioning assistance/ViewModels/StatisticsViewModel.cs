@@ -1,14 +1,8 @@
 ﻿using Caliburn.Micro;
 using LiveCharts;
 using LiveCharts.Configurations;
-using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 
 namespace commissioning_assistance.ViewModels
@@ -53,17 +47,17 @@ namespace commissioning_assistance.ViewModels
 					{
 						new DateModel
 						{
-							DateTime = System.DateTime.Now,
+							DateTime = DateTime.Now,
 							Value = 5
 						},
 						new DateModel
 						{
-							DateTime = System.DateTime.Now.AddDays(2),
+							DateTime = DateTime.Now.AddDays(2),
 							Value = 9
 						},
 						new DateModel
 						{
-							DateTime = System.DateTime.Now.AddDays(6),
+							DateTime = DateTime.Now.AddDays(6),
 							Value = 3
 						}
 					},
@@ -76,7 +70,7 @@ namespace commissioning_assistance.ViewModels
 
 	public class DateModel
 	{
-		public System.DateTime DateTime { get; set; }
+		public DateTime DateTime { get; set; }
 		public double Value { get; set; }
 	}
 }
